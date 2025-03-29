@@ -14,7 +14,7 @@ public class F1Controller {
 
 
    @Autowired
-    private DriverRepository driverRepository;;
+    private DriverRepository driverRepository;
 
     @PostMapping("/add")
     public String addDriver(@RequestBody DriverRequest driver){
