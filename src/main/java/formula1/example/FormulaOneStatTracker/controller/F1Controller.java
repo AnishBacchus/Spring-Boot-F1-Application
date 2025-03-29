@@ -1,8 +1,11 @@
 package formula1.example.FormulaOneStatTracker.controller;
+
 import formula1.example.FormulaOneStatTracker.repository.DriverRepository;
 import formula1.example.FormulaOneStatTracker.request.DriverRequest;
 import formula1.example.FormulaOneStatTracker.request.UpdateDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Driver;
@@ -13,13 +16,13 @@ import java.util.List;
 public class F1Controller {
 
 
-   @Autowired
+    @Autowired
     private DriverRepository driverRepository;
 
     @PostMapping("/add")
-    public String addDriver(@RequestBody DriverRequest driver){
+    public ResponseEntity<String> addDriver(@RequestBody DriverRequest driver) {
         driverRepository.save(driver);
-        return driver + " added successfully";
+        return ResponseEntity.status(HttpStatus.CREATED).body(driver + " added successfully.");
     }
     //-----------------------------------------------------------------------------------------------------------
 
@@ -32,6 +35,7 @@ public class F1Controller {
 
     @GetMapping("/drivers/name/{name}")
     public List<DriverRequest> getDriversByName(@PathVariable String name) {
+
         return driverRepository.findByName(name);
     }
 
@@ -39,6 +43,7 @@ public class F1Controller {
 
     @GetMapping("/drivers/team/{team}")
     public List<DriverRequest> getDriversByTeam(@PathVariable String team) {
+
         return driverRepository.findByTeam(team);
     }
 
@@ -48,7 +53,7 @@ public class F1Controller {
     public String updateDriver(@PathVariable String oldName, @PathVariable String newName) {
         List<DriverRequest> drivers = driverRepository.findByName(oldName);
 
-        if(drivers.isEmpty()){
+        if (drivers.isEmpty()) {
             return oldName + " is currently not a driver";
         }
         drivers.get(0).setName(newName);
@@ -65,8 +70,8 @@ public class F1Controller {
         if (drivers.isEmpty()) {
             return "No drivers to remove.";
         }
-            driverRepository.delete(drivers.get(0));
-            return name + " was removed successfully";
+        driverRepository.delete(drivers.get(0));
+        return name + " was removed successfully";
     }
 
     //-----------------------------------------------------------------------------------------------------------
