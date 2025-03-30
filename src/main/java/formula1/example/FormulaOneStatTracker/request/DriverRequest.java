@@ -17,11 +17,6 @@ public class DriverRequest {
         String name;
         String team;
 
-
-        public DriverRequest(){
-        }
-
-
         public String getName() {
             return name;
         }
