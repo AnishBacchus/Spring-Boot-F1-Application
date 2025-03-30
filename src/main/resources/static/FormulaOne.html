@@ -8,11 +8,19 @@
 <body>
 <h1>Welcome to the Formula One Stat Tracker!</h1>
 
-<button onclick="getDrivers()">Get Drivers</button>
+<button onclick="getDrivers()">GetDrivers</button>
+<button onclick="addDriver()">AddDrivers</button>
 
 
 <script>
     const url = "http://localhost:8080"
+
+    function AddDriver(){
+      fetch('{$url}/add')
+      ,then(response => response.JSON())
+      ,then (data => {document.getElementById("output").textContent = JSON.stringify(data, null, 2);})
+      .catch(error => console.error("Error:", error));
+    }
 
     function GetDrivers(){
       fetch('{$url}/drivers')
